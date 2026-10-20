@@ -1,0 +1,41 @@
+# =================(
+# Python & Virtual Environments
+# =================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# =================
+# Machine Learning & Outputs
+# =================
+# models/*.pkl
+# outputs/
+# data/
+
+# =================
+# Environment Variables & Secrets
+# =================
+.env
+.env.local
+
+# =================
+# IDE & Operating System Files
+# =================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# =================
+# Streamlit & Logs
+# =================
+.streamlit/secrets.toml
+*.log
