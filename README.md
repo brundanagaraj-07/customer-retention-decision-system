@@ -64,31 +64,28 @@ revguard-retention-system/
 
 RevGuard transforms transactional tables into three specialized analytical database views:
 
-1. **`vw_customer_rfm`:**
-   * Calculates **Recency** (days since last active session), **Frequency** (total transactions), and **Monetary Value** (total spend).
-2. **`vw_customer_value_friction`:**
-   * Quantifies product usage intensity and operational friction by merging `avg_monthly_logins`, `total_support_tickets`, and `avg_resolution_time_hours`.
-3. **`vw_cohort_monthly_revenue`:**
-   * Tracks customer retention cohorts and monthly recurring revenue (MRR) performance over time.
+1. **`vw_customer_rfm`**: Calculates **Recency** (days since last active session), **Frequency** (total transactions), and **Monetary Value** (total spend).
+2. **`vw_customer_value_friction`**: Quantifies product usage intensity and operational friction by merging `avg_monthly_logins`, `total_support_tickets`, and `avg_resolution_time_hours`.
+3. **`vw_cohort_monthly_revenue`**: Tracks customer retention cohorts and monthly recurring revenue (MRR) performance over time.
 
 ---
 
 ## ⚙️ Feature Engineering & Modeling Strategy
 
-### **Feature Transformations**
+### Feature Transformations
 
-* **Support-to-Login Ratio:** Evaluates friction relative to usage intensity:
+* **Support-to-Login Ratio**: Evaluates operational friction relative to platform usage intensity:
+  ```text
+  Friction Ratio = total_support_tickets / (avg_monthly_logins + 1)
+  ```
+* **Tier Encoding**: Categorical attributes (`subscription_tier`) are transformed via One-Hot Encoding.
+* **Missing Value Imputation**: Zero-filling missing engagement records for inactive users.
 
-  $$\text{Friction Ratio} = \frac{\text{total\_support\_tickets}}{\text{avg\_monthly\_logins} + 1}$$
+### Machine Learning Pipeline
 
-* **Tier Encoding:** Categorical attributes (`subscription_tier`) are transformed via One-Hot Encoding.
-* **Missing Value Imputation:** Zero-filling missing engagement records for inactive users.
-
-### **Machine Learning Pipeline**
-
-* **Algorithm:** Random Forest Classifier ($150$ estimators, max depth $10$).
-* **Class Weighting:** `balanced` setting to handle churn class imbalances without synthetic data leakage.
-* **Evaluation Metrics:** Stratified train-test splits ($80/20$) evaluated via **ROC-AUC** and precision-recall metrics.
+* **Algorithm**: Random Forest Classifier (150 estimators, max depth 10).
+* **Class Weighting**: `balanced` setting to handle churn class imbalances without synthetic data leakage.
+* **Evaluation Metrics**: Stratified train-test splits (80 / 20) evaluated via **ROC-AUC** and precision-recall metrics.
 
 ---
 
@@ -96,7 +93,7 @@ RevGuard transforms transactional tables into three specialized analytical datab
 
 The FastAPI service exposes a REST endpoint (`POST /predict-churn`) to return real-time predictions and automated retention recommendations.
 
-### **Decision Matrix**
+### Decision Matrix
 
 | Risk Tier | Churn Probability ($P$) | Automated Action Strategy |
 | :--- | :--- | :--- |
@@ -110,14 +107,14 @@ The FastAPI service exposes a REST endpoint (`POST /predict-churn`) to return re
 
 The interactive UI (`src/dashboard.py`) contains two primary modules:
 
-1. **Portfolio Risk Analytics:** High-level metrics showing aggregate portfolio health, pie chart visualizations of risk tiers, and exportable tables of high-risk customers requiring intervention.
-2. **Live Customer Simulator:** Slider-based tool enabling product managers to tweak customer usage parameters and compute instant churn probabilities.
+1. **Portfolio Risk Analytics**: High-level metrics showing aggregate portfolio health, pie chart visualizations of risk tiers, and exportable tables of high-risk customers requiring intervention.
+2. **Live Customer Simulator**: Slider-based tool enabling product managers to tweak customer usage parameters and compute instant churn probabilities.
 
 ---
 
 ## 🚀 Setup & Installation Instructions
 
-### **1. Clone Repository & Setup Environment**
+### 1. Clone Repository & Setup Environment
 
 ```bash
 git clone https://github.com/your-username/revguard-retention-system.git
@@ -131,11 +128,11 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### **2. Configure Environment Variables**
+### 2. Configure Environment Variables
 
 Create a `.env` file in the project root based on `.env.example`:
 
-```env
+```ini
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=revguard_db
@@ -143,7 +140,7 @@ DB_USER=root
 DB_PASSWORD=YourSecurePassword123!
 ```
 
-### **3. Run Pipeline Execution Sequence**
+### 3. Run Pipeline Execution Sequence
 
 1. **Train Model Artifact:**
    ```bash
@@ -166,4 +163,4 @@ DB_PASSWORD=YourSecurePassword123!
 
 ## 📄 License
 
-Distributed under the **MIT License**. See `LICENSE` for more details.
+Distributed under the **MIT License**.
