@@ -10,7 +10,7 @@ The system integrates a relational database architecture, automated feature engi
 
 Modern subscription and SaaS businesses face revenue leakage due to unmitigated churn. RevGuard bridges raw transactional data with actionable operational workflows through a 5-tier modular pipeline:
 
-```
+```text
 [ MySQL Database & Views ] ──► [ Data Loader (data_loader.py) ]
                                             │
                                             ▼
@@ -39,7 +39,7 @@ Modern subscription and SaaS businesses face revenue leakage due to unmitigated 
 
 ## 📁 Repository Directory Structure
 
-```
+```text
 revguard-retention-system/
 ├── data/                       # Local dataset dumps and SQL scripts
 ├── models/                     # Trained ML model artifacts (.pkl)
@@ -76,12 +76,16 @@ RevGuard transforms transactional tables into three specialized analytical datab
 ## ⚙️ Feature Engineering & Modeling Strategy
 
 ### **Feature Transformations**
+
 * **Support-to-Login Ratio:** Evaluates friction relative to usage intensity:
+
   $$\text{Friction Ratio} = \frac{\text{total\_support\_tickets}}{\text{avg\_monthly\_logins} + 1}$$
+
 * **Tier Encoding:** Categorical attributes (`subscription_tier`) are transformed via One-Hot Encoding.
 * **Missing Value Imputation:** Zero-filling missing engagement records for inactive users.
 
 ### **Machine Learning Pipeline**
+
 * **Algorithm:** Random Forest Classifier ($150$ estimators, max depth $10$).
 * **Class Weighting:** `balanced` setting to handle churn class imbalances without synthetic data leakage.
 * **Evaluation Metrics:** Stratified train-test splits ($80/20$) evaluated via **ROC-AUC** and precision-recall metrics.
@@ -105,6 +109,7 @@ The FastAPI service exposes a REST endpoint (`POST /predict-churn`) to return re
 ## 🖥️ Streamlit Executive Dashboard
 
 The interactive UI (`src/dashboard.py`) contains two primary modules:
+
 1. **Portfolio Risk Analytics:** High-level metrics showing aggregate portfolio health, pie chart visualizations of risk tiers, and exportable tables of high-risk customers requiring intervention.
 2. **Live Customer Simulator:** Slider-based tool enabling product managers to tweak customer usage parameters and compute instant churn probabilities.
 
@@ -113,6 +118,7 @@ The interactive UI (`src/dashboard.py`) contains two primary modules:
 ## 🚀 Setup & Installation Instructions
 
 ### **1. Clone Repository & Setup Environment**
+
 ```bash
 git clone https://github.com/your-username/revguard-retention-system.git
 cd revguard-retention-system
@@ -126,8 +132,10 @@ pip install -r requirements.txt
 ```
 
 ### **2. Configure Environment Variables**
+
 Create a `.env` file in the project root based on `.env.example`:
-```ini
+
+```env
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=revguard_db
@@ -141,6 +149,7 @@ DB_PASSWORD=YourSecurePassword123!
    ```bash
    python src/train_model.py
    ```
+
 2. **Launch FastAPI Backend:**
    ```bash
    uvicorn src.api:app --reload
@@ -156,4 +165,5 @@ DB_PASSWORD=YourSecurePassword123!
 ---
 
 ## 📄 License
+
 Distributed under the **MIT License**. See `LICENSE` for more details.
