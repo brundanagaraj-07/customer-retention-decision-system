@@ -6,7 +6,7 @@ import sys
 # Configuration Settings
 # -----------------------------------------------------------------------------
 DB_USER = "root"          # Your MySQL username
-DB_PASSWORD = "Nagaraj@1211" # Your actual MySQL password (handles special characters safely)
+DB_PASSWORD = "" # Your actual MySQL password (handles special characters safely)
 DB_HOST = "localhost"     # Usually localhost
 DB_PORT = "3306"          # Default MySQL port
 DB_NAME = "revguard_db"   # Target database name
