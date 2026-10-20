@@ -9,7 +9,7 @@ def load_data():
         connection = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='Nagaraj@1211'
+            password=''
         )
         
         if connection.is_connected():
