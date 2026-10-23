@@ -6,7 +6,7 @@ The system integrates a relational database architecture, automated feature engi
 
 ---
 
-## 📌 Executive Summary & Architecture
+## Executive Summary & Architecture
 
 Modern subscription and SaaS businesses face revenue leakage due to unmitigated churn. RevGuard bridges raw transactional data with actionable operational workflows through a 5-tier modular pipeline:
 
