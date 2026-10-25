@@ -103,7 +103,7 @@ The FastAPI service exposes a REST endpoint (`POST /predict-churn`) to return re
 
 ---
 
-## 🖥️ Streamlit Executive Dashboard
+##  Streamlit Executive Dashboard
 
 The interactive UI (`src/dashboard.py`) contains two primary modules:
 
